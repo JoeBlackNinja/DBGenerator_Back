@@ -1,6 +1,8 @@
 const express = require( 'express');
 const routes = express.Router();
 
+const idGenerator = require('../utilities/idGenerator');
+const booleanGenerator = require('../utilities/booleanGenerator');
 const first_name = require('../databases/first_name');
 const last_name = require('../databases/last_name');
 const email = require('../databases/email');
@@ -19,7 +21,9 @@ const { forEach } = require('../databases/first_name');
 const array_ =(datosIndices, datosValores) => {
     let register = new Object();
     for(let i = 0; i<datosIndices.length; i++){        
-        register[`${datosIndices[i]}`] = eval(`${datosValores[i]}[random()]`)
+        register[`${datosIndices[i]}`] = datosValores[i] == 'id' ? idGenerator():                                        
+                                        datosValores[i] == 'boolean' ? booleanGenerator():
+                                        eval(`${datosValores[i]}[random()]`)
     }
     return register;
 };
